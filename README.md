@@ -6,12 +6,12 @@ this is a work in progress.
 
 merged RFCs:
 * Standard:
+	- [RFC1034	Domain names - concepts and facilities](https://tools.ietf.org/html/rfc1034.txt)
 
 consecutive RFCs will be added in the following order:
 
 TODO:
 * Standard:
-	- [RFC1034	Domain names - concepts and facilities](https://tools.ietf.org/html/rfc1034.txt)
 	- [RFC1035	Domain names - implementation and specification](https://tools.ietf.org/html/rfc1035.txt)
 	- [RFC1982	Serial Number Arithmetic](https://tools.ietf.org/html/rfc1982.txt)
 	- [RFC1995	Incremental Zone Transfer in DNS](https://tools.ietf.org/html/rfc1995.txt)
