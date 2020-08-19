@@ -1,5 +1,6 @@
-# Introduction
-## The history of domain names
+# CONCEPTS AND FACILITIES
+## Introduction
+### The history of domain names
 The impetus for the development of the domain system was growth in the
 Internet:
    - Host name to address mappings were maintained by the Network
@@ -39,7 +40,7 @@ DNS described here.  Very often, the term domain name is used to refer
 to a name with structure indicated by dots, but no relation to the DNS.
 This is particularly true in mail addressing [Quarterman 86].[^1034]
 
-## DNS design goals
+### DNS design goals
 The design goals of the DNS influence its structure.  They are:
 
    - The primary goal is a consistent name space which will be used
@@ -91,7 +92,7 @@ The design goals of the DNS influence its structure.  They are:
 
 [^1034]
 
-## Assumptions about usage
+### Assumptions about usage
 The organization of the domain system derives from some assumptions
 about the needs and usage patterns of its user community and is designed
 to avoid many of the the complicated problems found in general purpose
@@ -198,7 +199,7 @@ The domain system provides:
 
 [^1034]
 
-## Elements of the DNS
+### Elements of the DNS
 The DNS has three major components:
 
    - The DOMAIN NAME SPACE and RESOURCE RECORDS, which are
@@ -265,9 +266,9 @@ functions.  For example, a resolver on the same machine as a name server
 might share a database consisting of the the zones managed by the name
 server and the cache managed by the resolver.[^1034]
 
-# DOMAIN NAME SPACE and RESOURCE RECORDS
+## DOMAIN NAME SPACE and RESOURCE RECORDS
 
-## Name space specifications and terminology
+### Name space specifications and terminology
 The domain name space is a tree structure.  Each node and leaf on the
 tree corresponds to a resource set (which may be empty).  The domain
 system makes no distinctions between the uses of the interior nodes and
@@ -336,7 +337,7 @@ is contained within that domain.  This relationship can be tested by
 seeing if the subdomain's name ends with the containing domain's name.
 For example, A.B.C.D is a subdomain of B.C.D, C.D, D, and " ".[^1034]
 
-## Administrative guidelines on use
+### Administrative guidelines on use
 As a matter of policy, the DNS technical specifications do not mandate a
 particular tree structure or rules for selecting labels; its goal is to
 be as general as possible, so that it can be used to build arbitrary
@@ -365,7 +366,7 @@ decomposition can be done without renaming.  Node labels which use
 special characters, leading digits, etc., are likely to break older
 software which depends on more restrictive choices.[^1034]
 
-## Technical guidelines on use
+### Technical guidelines on use
 Before the DNS can be used to hold naming information for some kind of
 object, two needs must be met:
 
@@ -407,7 +408,7 @@ features when defining the rules.  The way the DNS is used to support
 some object is often more crucial than the restrictions inherent in the
 DNS.[^1034]
 
-## Example name space
+### Example name space
 The following figure shows a part of the current domain name space, and
 is used in many examples in this RFC.  Note that the tree is a very
 small subset of the actual name space.
@@ -439,7 +440,7 @@ In this example, the root domain has three immediate subdomains: MIL,
 EDU, and ARPA.  The LCS.MIT.EDU domain has one immediate subdomain named
 XX.LCS.MIT.EDU.  All of the leaves are also domains.[^1034]
 
-## Preferred name syntax
+### Preferred name syntax
 The DNS specifications attempt to be as general as possible in the rules
 for constructing domain names.  The idea is that the name of any
 existing object can be expressed as a domain name with minimal changes.
@@ -489,7 +490,7 @@ A.ISI.EDU  XX.LCS.MIT.EDU  SRI-NIC.ARPA
 
 [^1034]
 
-## Resource Records
+### Resource Records
 A domain name identifies a node.  Each node has a set of resource
 information, which may be empty.  The set of resource information
 associated with a particular name is composed of separate resource
@@ -569,7 +570,7 @@ The data in the RDATA section of RRs is carried as a combination of
 binary strings and domain names.  The domain names are frequently used
 as "pointers" to other data in the DNS.[^1034]
 
-### Textual expression of RRs
+#### Textual expression of RRs
 RRs are represented in binary form in the packets of the DNS protocol,
 and are usually represented in highly encoded form when stored in a name
 server or resolver.  In this memo, we adopt a style similar to that used
@@ -618,7 +619,7 @@ Similarly we might see:
 This example shows two addresses for XX.LCS.MIT.EDU, each of a different
 class.[^1034]
 
-### Aliases and canonical names
+#### Aliases and canonical names
 In existing systems, hosts and other resources often have several names
 that identify the same resource.  For example, the names C.ISI.EDU and
 USC-ISIC.ARPA both identify the same host.  Similarly, in the case of
@@ -669,7 +670,7 @@ principle, domain software should not fail when presented with CNAME
 chains or loops; CNAME chains should be followed and CNAME loops
 signalled as an error.[^1034]
 
-## Queries
+### Queries
 Queries are messages which may be sent to a name server to provoke a
 response.  In the Internet, queries are carried in UDP datagrams or over
 TCP connections.  The response by the name server either answers the
@@ -716,7 +717,7 @@ header opcode.
 
 [^1034]
 
-### Standard queries
+#### Standard queries
 A standard query specifies a target domain name (QNAME), query type
 (QTYPE), and query class (QCLASS) and asks for RRs which match.  This
 type of query makes up such a vast majority of DNS queries that we use
@@ -772,7 +773,7 @@ the classes available in the domain system, it can never know if it is
 authoritative for all classes.  Hence responses to QCLASS=* queries can
 never be authoritative.[^1034]
 
-### Inverse queries (Optional)
+#### Inverse queries (Optional)
 
 Name servers may also support inverse queries that map a particular
 resource to a domain name or domain names that have that resource.  For
@@ -799,16 +800,16 @@ to host names; use the IN-ADDR.ARPA domain instead.[^1034]
 
 A detailed discussion of inverse queries is contained in [RFC-1035].[^1034]
 
-## Status queries (Experimental)
+### Status queries (Experimental)
 To be defined.[^1034]
 
-## Completion queries (Obsolete)
+### Completion queries (Obsolete)
 The optional completion services described in RFCs 882 and 883 have been
 deleted.  Redesigned services may become available in the future, or the
 opcodes may be reclaimed for other use.[^1034]
 
-# NAME SERVERS
-## Introduction
+## NAME SERVERS
+### Introduction
 Name servers are the repositories of information that make up the domain
 database.  The database is divided up into sections called zones, which
 are distributed among the name servers.  While name servers can have
@@ -831,7 +832,7 @@ other parts of the tree.  The name server marks its responses to queries
 so that the requester can tell whether the response comes from
 authoritative data or not.[^1034]
 
-## How the database is divided into zones
+### How the database is divided into zones
 The domain database is partitioned in two ways: by class, and by "cuts"
 made in the name space between nodes.[^1034]
 
@@ -871,7 +872,7 @@ internal partitions to achieve nested delegations of name space control.
 In some cases, such divisions are made purely to make database
 maintenance more convenient.[^1034]
 
-### Technical considerations
+#### Technical considerations
 The data that describes a zone has four major parts:
    - Authoritative data for all nodes within the zone.
 
@@ -926,7 +927,7 @@ part of the authoritative data, and are address RRs for the servers.
 These RRs are only necessary if the name server's name is "below" the
 cut, and are only used as part of a referral response.[^1034]
 
-### Administrative considerations
+#### Administrative considerations
 When some organization wants to control its own domain, the first step
 is to identify the proper parent zone, and get the parent zone's owners
 to agree to the delegation of control.  While there are no particular
@@ -954,8 +955,8 @@ necessary to make the delegation effective should be added to the parent
 zone.  The administrators of both zones should insure that the NS and
 glue RRs which mark both sides of the cut are consistent and remain so.[^1034]
 
-## Name server internals
-### Queries and responses
+### Name server internals
+#### Queries and responses
 The principal activity of name servers is to answer standard queries.
 Both the query and its response are carried in a standard message format
 which is described in [RFC-1035].  The query contains a QTYPE, QCLASS,
@@ -1058,7 +1059,7 @@ recursive response will be one of the following:
 
 [^1034]
 
-### Algorithm
+#### Algorithm
    1. Set or clear the value of recursion available in the response
       depending on whether the name server is willing to provide
       recursive service.  If recursive service is available and
@@ -1125,7 +1126,7 @@ recursive response will be one of the following:
 
 [^1034]
 
-### Wildcards
+#### Wildcards
 In the previous algorithm, special treatment was given to RRs with owner
 names starting with the label "*".  Such RRs are called wildcards.
 Wildcard RRs can be thought of as instructions for synthesizing RRs.
@@ -1195,7 +1196,7 @@ subtree by the explicit data for A.X.COM.  Note also that the explicit
 MX data at X.COM and A.X.COM is required, and that none of the RRs above
 would match a query name of XX.COM.[^1034]
 
-### Negative response caching (Optional)
+#### Negative response caching (Optional)
 The DNS provides an optional service which allows name servers to
 distribute, and resolvers to cache, negative results with TTLs.  For
 example, a name server can distribute a TTL along with a name error
@@ -1245,7 +1246,7 @@ the cached data can be reset to the zone MINIMUM value if it is smaller.
 This usage is mentioned for planning purposes only, and is not
 recommended as yet.[^1034]
 
-### Zone maintenance and transfers
+#### Zone maintenance and transfers
 Part of the job of a zone administrator is to maintain the zones at all
 of the name servers which are authoritative for the zone.  When the
 inevitable changes are made, they must be distributed to all of the name
@@ -1306,8 +1307,8 @@ process when the primary is unavailable due to host downtime or network
 problems, or when a secondary server has better network access to an
 "intermediate" secondary than to the primary.[^1034]
 
-# RESOLVERS
-## Introduction
+## RESOLVERS
+### Introduction
 Resolvers are programs that interface user programs to domain name
 servers.  In the simplest case, a resolver receives a request from a
 user program (e.g., mail programs, TELNET, FTP) in the form of a
@@ -1327,8 +1328,8 @@ prior results.  It follows that caches which are shared by multiple
 processes, users, machines, etc., are more efficient than non-shared
 caches.[^1034]
 
-## Client-resolver interface
-### Typical functions
+### Client-resolver interface
+#### Typical functions
 The client interface to the resolver is influenced by the local host's
 conventions, but the typical resolver-client interface has three
 functions:
@@ -1398,7 +1399,7 @@ first for one type of information about a name followed by a second
 request to the same name for some other type of information; if the two
 errors are combined, then useless queries may slow the application.[^1034]
 
-### Aliases
+#### Aliases
 While attempting to resolve a particular request, the resolver may find
 that the name in question is an alias.  For example, the resolver might
 find that the name given for host name to address translation is an
@@ -1418,7 +1419,7 @@ not be signalled as an error.  Alias loops and aliases which point to
 non-existent names should be caught and an error condition passed back
 to the client.[^1034]
 
-### Temporary failures
+#### Temporary failures
 In a less than perfect world, all resolvers will occasionally be unable
 to resolve a particular request.  This condition can be caused by a
 resolver which becomes separated from the rest of the network due to a
@@ -1430,13 +1431,13 @@ name or data not present error to applications.  This sort of behavior
 is annoying to humans, and can wreak havoc when mail systems use the
 DNS.[^1034]
 
-## Resolver internals
+### Resolver internals
 Every resolver implementation uses slightly different algorithms, and
 typically spends much more logic dealing with errors of various sorts
 than typical occurances.  This section outlines a recommended basic
 strategy for resolver operation, but leaves details to [RFC-1035].[^1034]
 
-### Stub resolvers
+#### Stub resolvers
 One option for implementing a resolver is to move the resolution
 function out of the local machine and into a name server which supports
 recursive queries.  This can provide an easy method of providing domain
@@ -1463,7 +1464,7 @@ requests.  Use of TCP may be an answer, but TCP may well place burdens
 on the host's capabilities which are similar to those of a real
 resolver.[^1034]
 
-### Resources
+#### Resources
 In addition to its own resources, the resolver may also have shared
 access to zones maintained by a local name server.  This gives the
 resolver the advantage of more rapid access, but the resolver must be
@@ -1530,7 +1531,7 @@ resolver:
 
 [^1034]
 
-### Algorithm
+#### Algorithm
 The top level algorithm has four steps:
 1. See if the answer is in local information, and if so return
    it to the client.
@@ -1646,6 +1647,303 @@ If the response contains a CNAME, the search is restarted at the CNAME
 unless the response has the data for the canonical name or if the CNAME
 is the answer itself.[^1034]
 
+# IMPLEMENTATION AND SPECIFICATION
+## INTRODUCTION
+### Overview
+The goal of domain names is to provide a mechanism for naming resources
+in such a way that the names are usable in different hosts, networks,
+protocol families, internets, and administrative organizations.[^1035]
+
+From the user's point of view, domain names are useful as arguments to a
+local agent, called a resolver, which retrieves information associated
+with the domain name.  Thus a user might ask for the host address or
+mail information associated with a particular domain name.  To enable
+the user to request a particular type of information, an appropriate
+query type is passed to the resolver with the domain name.  To the user,
+the domain tree is a single information space; the resolver is
+responsible for hiding the distribution of data among name servers from
+the user.[^1035]
+
+From the resolver's point of view, the database that makes up the domain
+space is distributed among various name servers.  Different parts of the
+domain space are stored in different name servers, although a particular
+data item will be stored redundantly in two or more name servers.  The
+resolver starts with knowledge of at least one name server.  When the
+resolver processes a user query it asks a known name server for the
+information; in return, the resolver either receives the desired
+information or a referral to another name server.  Using these
+referrals, resolvers learn the identities and contents of other name
+servers.  Resolvers are responsible for dealing with the distribution of
+the domain space and dealing with the effects of name server failure by
+consulting redundant databases in other servers.[^1035]
+
+Name servers manage two kinds of data.  The first kind of data held in
+sets called zones; each zone is the complete database for a particular
+"pruned" subtree of the domain space.  This data is called
+authoritative.  A name server periodically checks to make sure that its
+zones are up to date, and if not, obtains a new copy of updated zones
+from master files stored locally or in another name server.  The second
+kind of data is cached data which was acquired by a local resolver.
+This data may be incomplete, but improves the performance of the
+retrieval process when non-local data is repeatedly accessed.  Cached
+data is eventually discarded by a timeout mechanism.[^1035]
+
+This functional structure isolates the problems of user interface,
+failure recovery, and distribution in the resolvers and isolates the
+database update and refresh problems in the name servers.[^1035]
+
+### Common configurations
+A host can participate in the domain name system in a number of ways,
+depending on whether the host runs programs that retrieve information
+from the domain system, name servers that answer queries from other
+hosts, or various combinations of both functions.  The simplest, and
+perhaps most typical, configuration is shown below:
+
+```
+                 Local Host                        |  Foreign
+                                                   |
+    +---------+               +----------+         |  +--------+
+    |         | user queries  |          |queries  |  |        |
+    |  User   |-------------->|          |---------|->|Foreign |
+    | Program |               | Resolver |         |  |  Name  |
+    |         |<--------------|          |<--------|--| Server |
+    |         | user responses|          |responses|  |        |
+    +---------+               +----------+         |  +--------+
+                                |     A            |
+                cache additions |     | references |
+                                V     |            |
+                              +----------+         |
+                              |  cache   |         |
+                              +----------+         |
+```
+
+[^1035]
+
+User programs interact with the domain name space through resolvers; the
+format of user queries and user responses is specific to the host and
+its operating system.  User queries will typically be operating system
+calls, and the resolver and its cache will be part of the host operating
+system.  Less capable hosts may choose to implement the resolver as a
+subroutine to be linked in with every program that needs its services.
+Resolvers answer user queries with information they acquire via queries
+to foreign name servers and the local cache.[^1035]
+
+Note that the resolver may have to make several queries to several
+different foreign name servers to answer a particular user query, and
+hence the resolution of a user query may involve several network
+accesses and an arbitrary amount of time.  The queries to foreign name
+servers and the corresponding responses have a standard format described
+in this memo, and may be datagrams.[^1035]
+
+Depending on its capabilities, a name server could be a stand alone
+program on a dedicated machine or a process or processes on a large
+timeshared host.  A simple configuration might be:
+
+```
+
+                 Local Host                        |  Foreign
+                                                   |
+      +---------+                                  |
+     /         /|                                  |
+    +---------+ |             +----------+         |  +--------+
+    |         | |             |          |responses|  |        |
+    |         | |             |   Name   |---------|->|Foreign |
+    |  Master |-------------->|  Server  |         |  |Resolver|
+    |  files  | |             |          |<--------|--|        |
+    |         |/              |          | queries |  +--------+
+    +---------+               +----------+         |
+```
+
+[^1035]
+
+Here a primary name server acquires information about one or more zones
+by reading master files from its local file system, and answers queries
+about those zones that arrive from foreign resolvers.[^1035]
+
+The DNS requires that all zones be redundantly supported by more than
+one name server.  Designated secondary servers can acquire zones and
+check for updates from the primary server using the zone transfer
+protocol of the DNS.  This configuration is shown below:
+
+```
+                 Local Host                        |  Foreign
+                                                   |
+      +---------+                                  |
+     /         /|                                  |
+    +---------+ |             +----------+         |  +--------+
+    |         | |             |          |responses|  |        |
+    |         | |             |   Name   |---------|->|Foreign |
+    |  Master |-------------->|  Server  |         |  |Resolver|
+    |  files  | |             |          |<--------|--|        |
+    |         |/              |          | queries |  +--------+
+    +---------+               +----------+         |
+                                A     |maintenance |  +--------+
+                                |     +------------|->|        |
+                                |      queries     |  |Foreign |
+                                |                  |  |  Name  |
+                                +------------------|--| Server |
+                             maintenance responses |  +--------+
+```
+
+[^1035]
+
+In this configuration, the name server periodically establishes a
+virtual circuit to a foreign name server to acquire a copy of a zone or
+to check that an existing copy has not changed.  The messages sent for
+these maintenance activities follow the same form as queries and
+responses, but the message sequences are somewhat different.[^1035]
+
+The information flow in a host that supports all aspects of the domain
+name system is shown below:
+
+```
+
+                 Local Host                        |  Foreign
+                                                   |
+    +---------+               +----------+         |  +--------+
+    |         | user queries  |          |queries  |  |        |
+    |  User   |-------------->|          |---------|->|Foreign |
+    | Program |               | Resolver |         |  |  Name  |
+    |         |<--------------|          |<--------|--| Server |
+    |         | user responses|          |responses|  |        |
+    +---------+               +----------+         |  +--------+
+                                |     A            |
+                cache additions |     | references |
+                                V     |            |
+                              +----------+         |
+                              |  Shared  |         |
+                              | database |         |
+                              +----------+         |
+                                A     |            |
+      +---------+     refreshes |     | references |
+     /         /|               |     V            |
+    +---------+ |             +----------+         |  +--------+
+    |         | |             |          |responses|  |        |
+    |         | |             |   Name   |---------|->|Foreign |
+    |  Master |-------------->|  Server  |         |  |Resolver|
+    |  files  | |             |          |<--------|--|        |
+    |         |/              |          | queries |  +--------+
+    +---------+               +----------+         |
+                                A     |maintenance |  +--------+
+                                |     +------------|->|        |
+                                |      queries     |  |Foreign |
+                                |                  |  |  Name  |
+                                +------------------|--| Server |
+                             maintenance responses |  +--------+
+
+```
+
+[^1035]
+
+The shared database holds domain space data for the local name server
+and resolver.  The contents of the shared database will typically be a
+mixture of authoritative data maintained by the periodic refresh
+operations of the name server and cached data from previous resolver
+requests.  The structure of the domain data and the necessity for
+synchronization between name servers and resolvers imply the general
+characteristics of this database, but the actual format is up to the
+local implementor.[^1035]
+
+Information flow can also be tailored so that a group of hosts act
+together to optimize activities.  Sometimes this is done to offload less
+capable hosts so that they do not have to implement a full resolver.
+This can be appropriate for PCs or hosts which want to minimize the
+amount of new network code which is required.  This scheme can also
+allow a group of hosts can share a small number of caches rather than
+maintaining a large number of separate caches, on the premise that the
+centralized caches will have a higher hit ratio.  In either case,
+resolvers are replaced with stub resolvers which act as front ends to
+resolvers located in a recursive server in one or more name servers
+known to perform that service:
+
+```
+                   Local Hosts                     |  Foreign
+                                                   |
+    +---------+                                    |
+    |         | responses                          |
+    | Stub    |<--------------------+              |
+    | Resolver|                     |              |
+    |         |----------------+    |              |
+    +---------+ recursive      |    |              |
+                queries        |    |              |
+                               V    |              |
+    +---------+ recursive     +----------+         |  +--------+
+    |         | queries       |          |queries  |  |        |
+    | Stub    |-------------->| Recursive|---------|->|Foreign |
+    | Resolver|               | Server   |         |  |  Name  |
+    |         |<--------------|          |<--------|--| Server |
+    +---------+ responses     |          |responses|  |        |
+                              +----------+         |  +--------+
+                              |  Central |         |
+                              |   cache  |         |
+                              +----------+         |
+```
+
+[^1035]
+
+In any case, note that domain components are always replicated for
+reliability whenever possible.[^1035]
+
+### Conventions
+The domain system has several conventions dealing with low-level, but
+fundamental, issues.  While the implementor is free to violate these
+conventions WITHIN HIS OWN SYSTEM, he must observe these conventions in
+ALL behavior observed from other hosts.[^1035]
+
+#### Preferred name syntax
+The DNS specifications attempt to be as general as possible in the rules
+for constructing domain names.  The idea is that the name of any
+existing object can be expressed as a domain name with minimal changes.
+However, when assigning a domain name for an object, the prudent user
+will select a name which satisfies both the rules of the domain system
+and any existing rules for the object, whether these rules are published
+or implied by existing programs.[^1035]
+
+or example, when naming a mail domain, the user should satisfy both the
+rules of this memo and those in RFC-822.  When creating a new host name,
+the old rules for HOSTS.TXT should be followed.  This avoids problems
+when old software is converted to use domain names.[^1035]
+
+The following syntax will result in fewer problems with many
+applications that use domain names (e.g., mail, TELNET).
+
+```
+<domain> ::= <subdomain> | " "
+
+<subdomain> ::= <label> | <subdomain> "." <label>
+
+<label> ::= <letter> [ [ <ldh-str> ] <let-dig> ]
+
+<ldh-str> ::= <let-dig-hyp> | <let-dig-hyp> <ldh-str>
+
+<let-dig-hyp> ::= <let-dig> | "-"
+
+<let-dig> ::= <letter> | <digit>
+
+<letter> ::= any one of the 52 alphabetic characters A through Z in
+upper case and a through z in lower case
+
+<digit> ::= any one of the ten digits 0 through 9
+```
+
+[^1035]
+
+Note that while upper and lower case letters are allowed in domain
+names, no significance is attached to the case.  That is, two names with
+the same spelling but different case are to be treated as if identical.[^1035]
+
+The labels must follow the rules for ARPANET host names.  They must
+start with a letter, end with a letter or digit, and have as interior
+characters only letters, digits, and hyphen.  There are also some
+restrictions on the length.  Labels must be 63 characters or less.[^1035]
+
+For example, the following strings identify hosts in the Internet:
+
+```
+A.ISI.EDU XX.LCS.MIT.EDU SRI-NIC.ARPA
+```
+
+[^1035]
 
 [^1034]: [1034](https://tools.ietf.org/html/rfc1034)
 [^1035]: [1034](https://tools.ietf.org/html/rfc1035)
